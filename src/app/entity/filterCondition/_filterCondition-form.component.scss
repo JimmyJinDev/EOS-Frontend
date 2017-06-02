@@ -1,0 +1,50 @@
+filtercondition-form {
+  form-header > .row > div[class^="col-"].field-entity-name{
+    margin-left: 0;
+  }
+  .panel.panel-card {
+    .panel-heading {
+      background-color: $color-grey;
+      color: $color-dark-grey;
+      padding: 10px;
+      height: 50px;
+      margin-bottom: 12px;
+      .panel-title {
+        font-size: 1.4rem;
+      }
+    }
+
+    .filterCondition-text
+    {
+      &.text-1{
+        display: inline-block;
+      }
+    }
+
+    .filterCondition-operator
+    {
+      margin-bottom: 12px;
+      &.filterCondition-operator-1
+      {
+        display: inline-block;
+        width: initial;
+      }
+    }
+
+    [class^="filterCondition-"]{
+    }
+  }
+}
+
+.sidebar-body
+{
+  .entity-type-filterconditionoption .eoa-list-itm .content
+  {
+    padding-left: 2rem;
+    font-size: 1.5rem;
+    padding-top: 1rem;
+    .small{
+      font-size: 1rem;
+    }
+  }
+}

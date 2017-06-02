@@ -1,0 +1,84 @@
+form-header {
+
+  .field-entity-id {
+    color: $color-mid-grey;
+    font-size: 16px;
+    .title {
+      font-weight: 300;
+    }
+    .value {
+      font-weight: bold;
+      color: $color-dark-grey;
+    }
+  }
+
+  .field-status {
+    text-align: right;
+  }
+  .close-button-wrapper{
+    display: none;
+  }
+}
+
+app-sidebar form-header{
+  .close-button-wrapper{
+    display: block;
+  }
+}
+
+.field-entity-id{
+
+}
+
+.field-entity-name
+{
+}
+
+.field-status{
+  .btn-group.status-component
+  {
+    display: flex;
+  }
+  label{
+    float: left;
+    margin: auto 12px auto auto;
+  }
+  button{
+    font-size: 80%;
+    &.dropdown-toggle{
+      padding: 0 5px 0 0px;
+      display: flex;
+
+      .status-display
+      {
+        height: 40px;
+        width: 8px;
+        float: left;
+      }
+    }
+  }
+
+  .field-values
+  {
+    width: 112px;
+    .field-status-id-value
+    {
+      font-size: 15px;
+      line-height: 15px;
+      font-weight: 600;
+    }
+    .field-status-reason-value
+    {
+      font-size: 10px;
+      line-height: 10px;
+      font-weight: 300;
+    }
+  }
+  .caret{
+    margin-top: 11px;
+  }
+  .field-values, .caret{
+    margin: auto;
+    float: left;
+  }
+}

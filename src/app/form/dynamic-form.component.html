@@ -1,0 +1,104 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <label [attr.for]="formField.key">{{formField.label}}</label>
+  <ng-container [ngSwitch]="formField.controlType">
+
+    <ng-container id="component-textbox">
+
+      <div class="input-group">
+        <span class="input-group-addon input-group-preffix" *ngIf="hasPrefix()">{{formField.prefix}}</span>
+        <input *ngSwitchCase="'textbox'"
+               [formControlName]="formField.key"
+               [id]="formField.key"
+               [type]="formField.type"
+               [maxlength]="formField.maxlength"
+               class="form-control"
+               [attr.data-datetimepicker]="formField.datetimepicker"
+               [readonly]="!!isDisabled"
+               [attr.min]="formField.min"
+               [attr.max]="formField.max"
+        >
+        <button class=" input-group-addon btn btn-default col-sm-2" *ngIf="formField.showClearButton === true">
+          <i class="fa fa-remove"></i>
+        </button>
+        <span class="input-group-addon input-group-suffix" *ngIf="hasSuffix()">{{formField.suffix}}</span>
+      </div>
+
+    </ng-container>
+
+    <ng-container id="component-datetimepicker">
+
+      <ng-container *ngSwitchCase="'datetimepicker'">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input type="hidden"
+                 [(ngModel)]="dateValueModel" [ngModelOptions]="{standalone: true}"
+                 name="dp" ngbDatepicker #d="ngbDatepicker"
+                 (ngModelChange)="inputValueChanged($event)"
+          >
+          <input type="text"
+                 placeholder="mm/dd/yyyy"
+                 [formControlName]="formField.key"
+                 class="form-control"
+                 [name]="formField.key"
+          >
+          <div class="input-group-addon" (click)="d.toggle()" style="cursor: pointer;">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+
+    <ng-container id="component-entityLink">
+
+      <div *ngSwitchCase="'entityLink'" class="right-inner-addon component-entityLink">
+
+        <i class="fa fa-chevron-right"></i>
+        <input [formControlName]="formField.key"
+               [id]="formField.key" type="hidden" class="form-control" class="hidden">
+        <button class="form-control" [id]="formField.key" (click)="chooseEntityInSidebar(formField.key)"
+                [disabled]="entityLinkComponentIsDisabled()">
+          <div class="container">
+
+            <div class="row">
+              <div class="col-sm-4 component-preffix">
+                {{formField.data.dataPreffix}}
+                <span class="component-value">
+                  {{formField.data.dataValue}}
+                </span>
+              </div>
+              <div class="col-sm-8 component-suffix">
+                {{formField.data.dataSuffix}}
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+
+    </ng-container>
+
+    <ng-container id="component-dropdown">
+      <select
+        [id]="formField.key"
+        *ngSwitchCase="'dropdown'"
+        [formControlName]="formField.key"
+        class="form-control"
+        (ngModelChange)="inputValueChanged($event)"
+      >
+        <option *ngFor="let opt of formField.options" [value]="opt.key">{{opt.value}}</option>
+      </select>
+
+    </ng-container>
+
+    <ng-container id="component-yesNo" *ngSwitchCase="'yesNo'">
+
+      <select [id]="formField.key" [formControlName]="formField.key" class="form-control">
+        <option *ngFor="let opt of formField.options" [value]="opt.key">{{opt.value}}</option>
+      </select>
+
+    </ng-container>
+
+  </ng-container>
+
+  <div class="errorMessage" *ngIf="!isValid">{{formField.label}} is required</div>
+
+</ng-container>

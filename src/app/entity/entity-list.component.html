@@ -1,0 +1,54 @@
+<div class="row page-header-content-wrapper">
+  <div class="col-sm-12 field-entity-name">
+    <div class="row entity-name section-name">
+      <div class="col-sm-12">
+        <h1>
+          {{app.capitalize(entityType)}}s list
+        </h1>
+      </div>
+    </div>
+    <div class="row header-links" *ngIf="!this.app.getAppData( 'sidebarFormShown' )">
+      <div class="col-sm-12">
+        <button class="btn btn-link btn-sm"
+                (click)="app.EOA_NavigateTo('home', $event)"
+                placement="right" ngbTooltip="Click here to go Home.">
+          Home
+        </button>
+        <button class="btn btn-link btn-sm btn-create"
+                (click)="app.EOA_EntityNew($event)"
+                placement="bottom" ngbTooltip="Click here to enter a new item."
+        >New
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="eoa-list-wrapper">
+  <div class="eoa-list-itm"
+       *ngFor="let entityItm of entityItems
+             | paginate: {
+                  id: 'entityListPagination',
+                 itemsPerPage: 5,
+                 currentPage: entityListCurrentPage
+             }"
+       (click)="entityGoTo(entityItm)"
+       [ngClass]="{'status-active': entityItm.statusId === 1}"
+       [class.selected]="entityItm === selectedEntity">
+    <div class="status-display">
+    </div>
+    <div class="itm-id" [innerHTML]="getEntityID(entityItm)"></div>
+    <div class="content">
+      {{getEntityItemDesc(entityItm)}}
+    </div>
+  </div>
+</div>
+
+<div class="table-pagination">
+  <pagination-controls
+    id="entityListPagination"
+    (pageChange)="entityListCurrentPage = $event"
+  ></pagination-controls>
+</div>

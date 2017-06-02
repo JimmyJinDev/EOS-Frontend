@@ -1,0 +1,121 @@
+@import "../../css/variables";
+
+.form-body {
+  background-color: $color-grey;
+  .errorMessage{
+    color: red;
+    font-size: 12px;
+  }
+  input, select, textarea{
+    &.ng-invalid{
+      border-color: #d9534f;
+    }
+  }
+}
+
+.form-footer {
+  text-align: right;
+  border-top: 1px solid $color-mid-grey;
+  padding-top: 12px;
+  button {
+    padding: 10px 40px;
+    font-weight: bold;
+    &.btn-link {
+      text-decoration: underline;
+      color: $color-dark-grey;
+    }
+  }
+}
+
+.panel-group .panel {
+  margin-bottom: 12px;
+  box-shadow: none;
+}
+
+.panel-group.panel-card
+{
+  padding: 25px;
+  .panel-heading
+  {
+    padding: 0;
+    height: 20px;
+  }
+}
+
+.panel {
+  background-color: inherit;
+  border: 0px none transparent;
+  margin-bottom: 25px;
+  .panel-heading {
+    padding-top: 6px;
+    padding-bottom: 0;
+    background-color: transparent;
+    height: 40px;
+    .panel-title{
+      font-size: 1rem;
+      font-weight: 500;
+      color: $color-dark-grey;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+      .panel-title {
+        font-size: 20px;
+        font-weight: 400;
+        color: $color-dark-grey;
+        padding-left: 20px;
+        i {
+          font-size: 10px;
+          transition-property: all;
+          transition-duration: .4s;
+          position: absolute;
+          margin-top: 7px;
+          margin-left: -12px;
+        }
+      }
+      .card-tools {
+        .card-edit
+        {
+          display: none
+        }
+      }
+      &[aria-expanded="true"] {
+        .panel-title {
+          i {
+            transform: rotate(90deg);
+          }
+          .card-tools {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+  .panel-body {
+    padding: 0;
+  }
+  &.panel-card {
+    background-color: white;
+    transition: box-shadow .4s;
+    box-shadow: $box-shadow-shallow;
+    border-radius: 5px;
+    padding: 20px;
+    &[aria-expanded="false"]{
+      padding: 0px;
+      padding-left: 10px;
+    }
+
+    .panel-header {
+      height: 40px;
+    }
+  }
+
+}
+
+label {
+  color: $color-dark-grey;
+  font-weight: 300;
+  padding-left: 0px;
+  margin-bottom: 0;
+  font-size: 12px;
+}

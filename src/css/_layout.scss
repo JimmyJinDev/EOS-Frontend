@@ -1,0 +1,32 @@
+.container {
+  @media (max-width: 768px) {
+    width: initial;
+  }
+}
+
+.row.page-header-content-wrapper {
+  background-color: white;
+  height: 95px;
+
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 0;
+
+  margin-bottom: 20px;
+
+
+  [class^="col-"] {
+    margin: auto;
+  }
+
+  .section-name h1 {
+    margin: 0;
+    font-size: 38px;
+  }
+  .header-links * {
+    font-size: 12px;
+    padding-right: 0;
+    padding-left: 8px;
+  }
+}

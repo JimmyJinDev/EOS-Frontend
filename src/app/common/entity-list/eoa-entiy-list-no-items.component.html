@@ -1,0 +1,16 @@
+<div class="eoa-list-itm-no-data" *ngIf="getEntityListIsEmpty()">
+  <ng-container *ngIf="dataLoaded">
+    <div class="eoa-list-itm-no-data" *ngIf="getEntityListIsEmpty()">
+      <div class="eoa-list-itm-no-data-header">No items found.</div>
+      <div class="eoa-list-itm-no-data-cta">
+        <button class="btn btn-lg btn-default" (click)="addOne()">Add One?</button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!dataLoaded">
+    <ngb-progressbar type="info"
+                     [value]="100" [striped]="true"
+                     [animated]="true"><i>Loading...</i>
+    </ngb-progressbar>
+  </ng-container>
+</div>

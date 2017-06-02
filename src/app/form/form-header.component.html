@@ -1,0 +1,92 @@
+<div class="row page-header-content-wrapper">
+  <div class="close-button-wrapper">
+    <ng-container *ngIf="!isFIC()">
+      <button class="btn btn-link" *ngIf="getSidebarFormState()"
+              (click)="hideSidebar(false)"
+      >
+        <i class="fa fa-remove"></i>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="isFIC()">
+      <button class="btn btn-link" *ngIf="getSidebarFormState()"
+              (click)="goBackToFIC()"
+      >
+        <i class="fa fa-remove"></i>
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="col-sm-6 field-entity-name">
+    <div class="row entity-name section-name">
+      <div class="col-sm-12" *ngIf="!isFIC()">
+        <h1>{{data.entityName}}</h1>
+      </div>
+      <div class="col-sm-12" *ngIf="isFIC()">
+        <h1>Edit Condition</h1>
+      </div>
+    </div>
+    <div class="row header-links" *ngIf="!isFIC() && !this.app.getAppData( 'sidebarFormShown' )">
+      <div class="col-sm-12">
+        <button class="btn btn-link btn-sm"
+                (click)="app.EOA_EntityList($event)"
+                placement="right" ngbTooltip="Click here to go to the list.">
+          List
+        </button>
+        <button class="btn btn-link btn-sm btn-create"
+                (click)="app.EOA_EntityNew($event)"
+                *ngIf="!data.newRecord"
+                placement="bottom" ngbTooltip="Click here to enter a new item."
+        >New
+        </button>
+
+        <button class="btn btn-link btn-sm btn-create"
+                (click)="app.EOA_NavigateTo('prev', $event)"
+                *ngIf="!data.newRecord"
+                placement="bottom" ngbTooltip="Previous register."
+        >[ Prev
+        </button>
+        <button class="btn btn-link btn-sm btn-create"
+                (click)="app.EOA_NavigateTo('next', $event)"
+                *ngIf="!data.newRecord"
+                placement="bottom" ngbTooltip="Next register."
+        >| Next ]
+        </button>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2 field-entity-id">
+    <div class="entity-id">
+      <span class="title">{{entityAbbreviation}} - </span><span class="value">{{setEntityID()}}</span>
+    </div>
+  </div>
+  <div class="col-sm-4 field-status" *ngIf="!isFIC()">
+    <div class="row">
+      <div class="col">
+        <div ngbDropdown
+             class="d-inline-block status-component dropdown-component"
+             (openChange)="ngbOpenChange($event)"
+        >
+          <button class="btn btn-outline-primary" id="dropdownBasic1"
+                  ngbDropdownToggle
+                  (click)="toggleButton($event)"
+          >
+            <div class="status-display">
+            </div>
+            <div class="field-values">
+              <div class="field-status-id-value">{{StatusName}}</div>
+              <div class="field-status-reason-value">{{StatusReason}}</div>
+            </div>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownBasic1">
+            <button *ngFor="let statusReason of getStatusReasonList(); let i=index"
+                    (click)="selectStatusReason(i)"
+                    class="dropdown-item">{{statusReason.StatusReason}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

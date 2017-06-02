@@ -1,0 +1,170 @@
+@import 'variables';
+@import './font-awesome/font-awesome';
+@import 'utils';
+@import 'layout';
+@import 'forms';
+@import '../app/app.component';
+@import '../app/common/app-navbar/app-navbar.component';
+@import '../app/form/form-header.component';
+@import '../app/form/dynamic-form.component';
+@import '../app/common/app-pills.component';
+@import '../app/common/sidebar/app-sidebar.component';
+@import '../app/common/eoa-associated-entity/eoa-associated-entity.component';
+@import '../app/entity/eoa-entity-form.component';
+@import '../app/entity/offer/offer-form.component';
+@import '../app/entity/budget/budget-form.component';
+@import '../app/entity/advertiser/advertiser-form.component';
+@import '../app/entity/comment/comment-form.component';
+@import '../app/entity/filterCondition/filterCondition-form.component';
+
+body {
+  background-color: #eff3f6;
+  overflow-x: hidden;
+  font-family: $font-sans-1;
+}
+
+h1 {
+  font-weight: bolder;
+  font-size: 45px;
+
+  span {
+    font-size: 32px;
+  }
+}
+
+.btn-rounded {
+  border-radius: 10px;
+}
+
+#app-main-menu {
+  z-index: 9999;
+  background-color: white;
+  box-shadow: $box-shadow-deep;
+  height: 57px;
+  .nav-up {
+    top: -57px;
+  }
+}
+
+#app-overlay-base {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #000;
+  opacity: .2;
+}
+
+/**
+Pagination
+ */
+pagination-controls {
+  text-align: right;
+  a {
+    cursor: pointer;
+  }
+  .ngx-pagination .current {
+    background-color: $color-dark-grey;
+  }
+}
+
+/**
+Dropdown menu
+ */
+
+.open > .dropdown-menu {
+  right: 0;
+  left: initial;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/**
+Search field for EOA related entity forms
+@TODO: Normalize
+ */
+.search-field-expanded {
+  position: absolute !important;
+  margin-right: 46px;
+  z-index: 99999;
+  margin-top: -2px;
+  margin-left: 2px;
+  .form-control {
+    width: 290px;
+    margin-left: -253px;
+  }
+  &.display-collapsed {
+    opacity: 0;
+    .form-control {
+      width: 10px;
+    }
+  }
+  opacity: 1;
+  transition-property: all;
+  transition-duration: .4s;
+}
+
+.navbar-nav > li > a {
+  line-height: 26px;
+}
+
+.eoa-associated-comment-entity-items-wrapper {
+  display: inline-block;
+  padding: 20px;
+  .comment-list-body {
+    padding-left: 25px;
+    padding-right: 30px;
+  }
+}
+
+.dropdown-component {
+  .dropdown-toggle {
+    &::after {
+      margin: auto;
+    }
+  }
+  .dropdown-toggle, .dropdown-item {
+    cursor: pointer;
+  }
+}
+
+.btn-outline-primary:hover, .btn-primary,
+.btn-outline-primary:active, .btn-outline-primary.active, .show > .btn-outline-primary.dropdown-toggle,
+.dropdown-item.active, .dropdown-item:active {
+  background-color: $color-dark-grey;
+}
+
+.btn-outline-primary:hover, .btn-primary,
+.btn-outline-primary:active, .btn-outline-primary.active, .show > .btn-outline-primary.dropdown-toggle, .btn-outline-primary {
+  border-color: $color-dark-grey;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary.focus {
+  box-shadow: 0 0 0 2px $color-dark-grey;
+}
+
+.btn-outline-primary {
+  color: $color-dark-grey;
+}
+
+.badge-itm-id-wrapper {
+  //  padding: 0px;
+  //background-color: $color-dark-grey;
+  > span {
+    //padding: 6px;
+  }
+
+  .badge-itm-abbr {
+    //color: white;
+  }
+  .badge-itm-id {
+    //color: $color-grey;
+  }
+
+}
+
+.btn-link {
+  cursor: pointer;
+}

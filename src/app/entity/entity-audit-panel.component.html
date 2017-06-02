@@ -1,0 +1,43 @@
+<div class="panel panel-default panel-card" data-form-group-id="audit"
+     [attr.aria-expanded]="!data.collapse.audit"
+>
+  <div class="panel-heading" role="tab" id="heading-audit">
+    <a class="collapsed" role="button"
+       (click)="data.collapse.audit = !data.collapse.audit"
+       [attr.aria-expanded]="!data.collapse.audit" aria-controls="collapse-audit"
+    >
+      <h4 class="panel-title">
+        <i class="fa fa-play"></i>
+        Audit
+      </h4>
+    </a>
+  </div>
+  <div id="collapse-audit" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-audit"
+       [ngbCollapse]="data.collapse.audit"
+  >
+    <div class="panel-body">
+      <div class="row">
+        <label class="col-sm-2">{{formFields.CreatedDate.label}}</label>
+        <div class="col-sm-4 text-left">
+          {{form.value.CreatedDate}}
+        </div>
+        <label class="col-sm-2">{{formFields.CreatedBy.label}}</label>
+        <div class="col-sm-4 text-left">
+          {{form.value.CreatedBy}}
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-sm-2">{{formFields.LastModifiedBy.label}}</label>
+        <div class="col-sm-4 text-left">
+          <div class="form-group">
+            {{form.value.LastModifiedBy}}
+          </div>
+        </div>
+        <label class="col-sm-2">{{formFields.LastModifiedDate.label}}</label>
+        <div class="col-sm-4 text-left">
+          {{form.value.LastModifiedDate}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

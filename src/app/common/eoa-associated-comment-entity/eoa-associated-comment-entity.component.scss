@@ -1,0 +1,52 @@
+@import "../../../css/variables";
+
+eoa-associated-comment-entity {
+  .comment-input-wrapper, .comment-list-wrapper {
+    margin-bottom: 50px;
+    float: left;
+    width: 100%;
+  }
+  .comment-input-wrapper {
+    textarea {
+      width: 100%;
+      height: 90px;
+    }
+    button {
+      float: right;
+      padding: 13px 30px;
+      margin-top: 5px;
+    }
+  }
+  .comment-search-wrapper {
+    border-bottom: 1px solid black;
+    float: left;
+    width: 100%;
+    .comment-list-counter {
+      border-bottom: 4px solid black;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+  .comment-list-header {
+    float: left;
+    width: 100%;
+  }
+  .comment-list-body {
+    margin-top: 30px;
+    float: left;
+  }
+  .comment-list-itm {
+    margin-bottom: 30px;
+    display: block;
+    clear: both;
+    .comment-header {
+      margin-left: -10px;
+      margin-bottom: 7px;
+    }
+  }
+
+  .eoa-list-footer {
+    // @TODO: Normalize
+    margin-top: 20px;
+  }
+}

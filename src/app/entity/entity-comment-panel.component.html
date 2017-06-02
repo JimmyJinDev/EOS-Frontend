@@ -1,0 +1,25 @@
+<div class="panel panel-default panel-card" data-form-group-id="comment"
+     [attr.aria-expanded]="!data.collapse.comment"
+>
+  <div class="panel-heading" role="tab" id="heading-comment">
+    <a class="collapsed" role="button" data-toggle="collapse"
+       aria-expanded="false" aria-controls="collapse-comment"
+       [attr.aria-expanded]="!data.collapse.comment"
+       (click)="data.collapse.comment = !data.collapse.comment"
+    >
+      <h4 class="panel-title">
+        <i class="fa fa-play"></i>
+        Comments
+      </h4>
+    </a>
+  </div>
+  <div id="collapse-comment"
+       class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-budget"
+       [ngbCollapse]="data.collapse.comment"
+  >
+    <div class="panel-body">
+      <eoa-associated-comment-entity
+      ></eoa-associated-comment-entity>
+    </div>
+  </div>
+</div>

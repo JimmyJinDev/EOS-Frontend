@@ -1,0 +1,90 @@
+nav {
+  &#navbar-app-navbar-responsive
+  {
+    transition: margin 700ms;
+    @media (min-width: 993px) {
+      display: none;
+    }
+
+    .dropdown-toggle {
+      // Generate the caret automatically
+      &::before {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-right: 0.5em;
+        vertical-align: middle;
+        content: "";
+        border-top: $caret-width solid;
+        border-right: $caret-width solid transparent;
+        border-left: $caret-width solid transparent;
+      }
+
+      &::after {
+        border: 0px none transparent;
+      }
+
+      // Prevent the focus on the dropdown toggle when closing dropdowns
+      &:focus {
+        outline: 0;
+      }
+    }
+    .nav-item.dropdown button{
+      font-size: 1.4rem;
+      padding: 0.3rem 1rem;
+    }
+
+  }
+
+  button {
+    cursor: pointer;
+    color: $color-dark-grey !important;
+    &#EOA-main-sidebar-toggle {
+      color: white;
+      float: right;
+      background: transparent none;
+      border-radius: 14px;
+
+      border: 1px dotted $color-mid-grey;
+      width: 80px;
+      position: absolute;
+      right: 6rem;
+      padding: 7px;
+      .menu-text{
+        display: none;
+      }
+      @media (max-width: 992px) {
+        right: 1rem;
+        i {
+          display: none;
+        }
+        .menu-text{
+          display: block;
+        }
+      }
+      i {
+        color: black;
+      }
+    }
+    &.navbar-toggler-right {
+      padding: 8px;
+      font-size: .8rem;
+      padding: 12px;
+    }
+    &.btn-outline-primary {
+      &:hover, &.dropdown-toggle {
+        background-color: transparent !important;
+        border-color: transparent !important;
+      }
+      &.focus, &:focus {
+        box-shadow: none;
+      }
+    }
+    &:hover {
+      border: 1px solid $color-dark-grey !important;
+    }
+  }
+  .dropdown-item.active, .dropdown-item:active {
+    background-color: $color-dark-grey;
+  }
+}

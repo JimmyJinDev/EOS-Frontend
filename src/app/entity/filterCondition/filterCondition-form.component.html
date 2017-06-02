@@ -1,0 +1,103 @@
+<!--<div class="well">-->
+<!--fs.choices.Operators: {{ fs.choices.Operators | json }}-->
+<!--</div>-->
+<!--<div class="well">-->
+<!--fs.choices.Values: {{ this.fs.choices.Values | json }}-->
+<!--</div>-->
+<div *ngIf="(data.entity && dataLoaded); else showElse">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
+    <form-header [data]="data"
+                 [(statusId)]="form.value.statusId"
+                 [(StatusReasonId)]="form.value.StatusReasonId"
+                 [submittedAndSaved]="submittedAndSaved"
+    ></form-header>
+    <div class="panel-group form-body" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-group panel-default panel-card">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab">
+            <h3 class="panel-title">
+              {{ getPanelTitle() }}
+            </h3>
+          </div>
+          <div class="panel-body row">
+            <div class="col-sm-12">
+              <div class="form-group">
+
+                <div class="filterCondition-text text-1">
+                  {{ text_1 }}
+                </div>
+                <ng-container id="filer-condition-operator">
+                  <select
+                    [(ngModel)]="Operator" [ngModelOptions]="{standalone: true}"
+                    (change)="updateFICValue()"
+                    class="form-control filterCondition-operator filterCondition-operator-1"
+                  >
+                    <option *ngFor="let opt of fs.choices.Operators" [value]="opt.key"
+                            data-operator-control-type="">{{opt.value}}
+                    </option>
+                  </select>
+                </ng-container>
+
+                <div class="filterCondition-text text-1">
+                  {{ text_2 }}
+                </div>
+                <ng-container id="filer-condition-value" *ngIf="hasFilterConditionLUValues()">
+
+                  <select
+                    [(ngModel)]="Value" [ngModelOptions]="{standalone: true}"
+                    (change)="updateFICValue()"
+                    class="form-control filterCondition-value filterCondition-value-1"
+                  >
+                    <option *ngFor="let opt of fs.choices.Values" [value]="opt.key">{{opt.value}}</option>
+                  </select>
+                </ng-container>
+
+
+                <ng-container id="filer-condition-value-not-set" *ngIf="!hasFilterConditionLUValues()">
+                  <ng-container
+                    *ngFor="let filterConditionOperatorControlTypeGroup of fs.choices.Operators"
+                  >
+                    <ng-container
+                      *ngFor="let filterConditionOperatorControlType of filterConditionOperatorControlTypeGroup.filterConditionOperatorControlType; let idx = index"
+                    >
+                      <ng-container
+                        *ngIf="filterConditionOperatorControlType === 1 && isShowable(filterConditionOperatorControlTypeGroup.key)"
+                      >
+                        <input type="text"
+                               [attr.data-filter-operator-id]="filterConditionOperatorControlTypeGroup.key"
+                               [(ngModel)]="Value[idx]" [ngModelOptions]="{standalone: true}"
+                               (keypress)="updateFICValue()"
+                               [attr.class]="'filterCondition-value filterCondition-value-' + idx"
+                        >
+                      </ng-container>
+                      <select
+                        *ngIf="filterConditionOperatorControlType === 2"
+                        [(ngModel)]="Value" [ngModelOptions]="{standalone: true}"
+                        (change)="updateFICValue()"
+                        class="form-control filterCondition-operator filterCondition-operator-2"
+                      >
+                        <option *ngFor="let opt of fs.choices.Values" [value]="opt.key">{{opt.value}}</option>
+                      </select>
+
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form-footer
+      [form]="form"
+    ></form-footer>
+  </form>
+</div>
+<ng-template #showElse>
+  <ngb-progressbar type="info"
+                   [value]="100" [striped]="true"
+                   [animated]="true"><i>Loading...</i>
+  </ngb-progressbar>
+</ng-template>
+
+

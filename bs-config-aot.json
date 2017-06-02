@@ -1,0 +1,13 @@
+{
+  "open": false,
+  "port": 8080,
+  "server": {
+    "baseDir": "src/aot",
+    "routes": {
+      "/node_modules": "src/aot/node_modules"
+    },
+    "middleware": {
+      "0": null
+    }
+  }
+}

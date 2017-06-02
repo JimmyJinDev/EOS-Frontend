@@ -1,0 +1,65 @@
+df-formfield {
+  margin-bottom: 13px;
+  display: block;
+  line-height: 16px;
+
+  .component-entityLink {
+    cursor: pointer;
+  }
+
+  .form-control {
+    height: 40px;
+    font-family: $font-sans-2;
+    font-size: 16px;
+  }
+
+  .component-entityLink {
+    button {
+      text-align: left;
+      padding: 0;
+
+      .row{
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        height: 38px;
+      }
+
+      [class^="component-"] {
+        height: 100%;
+        padding: 9px 6px 0;
+      }
+
+      .component-preffix, .component-value {
+        background-color: $color-mid-grey;
+        color: white;
+      }
+
+      .component-preffix {
+        padding-top: 9px;
+        white-space: nowrap;
+        padding-left: 5px;
+        font-weight: 300;
+        padding-right: 4px;
+        max-width: 100px;
+
+        .component-value {
+          padding-top: 9px;
+          font-weight: 800;
+          color: #7f8fa4;
+          padding-left: 0;
+          padding-right: 8px;
+        }
+      }
+      .component-suffix {
+        padding-left: 5px;
+        padding-top: 3px;
+        font-style: italic;
+        color: $color-dark-grey;
+        font-size: 70%;
+        margin: auto;
+        padding-right: 30px;
+      }
+
+    }
+  }
+}

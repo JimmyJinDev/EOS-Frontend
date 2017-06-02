@@ -1,0 +1,217 @@
+<div class="sidebar-offcanvas" *ngIf="routerEntityLoaded == true"
+     [ngClass]="{'active': (getSidebarState() === true || getSidebarFormState() === true), 'sidebar-form': (getSidebarFormState() === true)}"
+>
+  <app-navbar
+    [navbarId]="'app-navbar-responsive'"
+    *ngIf="!app.getAppData('sidebarFormShown', true)"
+  ></app-navbar>
+
+  <div class="sidebar-header" *ngIf="getSidebarFormState() !== true">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form" id="sidebar-search" *ngIf="form">
+      <div class="row">
+        <div class="col-sm-2">
+          <button class="btn btn-default btn-rounded" role="button" data-toggle="collapse"
+                  aria-expanded="false"
+                  aria-controls="app-sidebar-filters-collapse"
+                  (click)="appSidebarFiltersCollapsed = !appSidebarFiltersCollapsed"
+                  [attr.aria-expanded]="!appSidebarFiltersCollapsed"
+          >
+            <span class="fa fa-filter" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="col-sm-9 pad-left-20">
+          <div class="form-group" *ngIf="formFields">
+
+            <div class="search-field-expanded-wrapper">
+              <div
+                class="search-field-expanded right-inner-addon"
+                [ngClass]="{'display-collapsed': searchExpanded == false}"
+              >
+                <button class="btn btn-default"
+                        (click)="toggleSearchExpand()"
+                >
+                  <i class="fa"
+                     [ngClass]="searchFieldExpandedClass()"
+                  ></i>
+                </button>
+                <input type="text"
+                       [(ngModel)]="query"
+                       [ngModelOptions]="{standalone: true}"
+                       class="form-control search-text-box"
+                       #searchTextBox
+                >
+              </div>
+              <button class="btn btn-link" (click)="toggleSearchExpand()">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-sm-1 pad-left-0">
+          <button class="btn-circle btn-add"
+                  (click)="app.EOA_EntityNew()"
+          >
+            <div class="text-icon">+</div>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="active-filters col-sm-12">
+          <div class="filter-itm" *ngIf="!isFIC()">
+            <span class="filter-itm-value">
+              <df-formfield [form]="form" [formField]="formFields.AppEntities"></df-formfield>
+            </span>
+          </div>
+          <div class="filter-itm" *ngIf="isFIC() && displayGrouped === '0'">
+            <span class="filter-itm-title">Group:</span>
+            <span class="filter-itm-value">
+
+              <select
+                [(ngModel)]="FICGroup"
+                [ngModelOptions]="{standalone: true}"
+              >
+                <option [value]="0">
+                </option>
+
+                <option [value]="fic_type.key"
+                        *ngFor="let fic_type of app.getAppData( 'initialDataTypes' )[ 'filterConditionGroup' ]"
+                >
+                  {{fic_type.value}}
+                </option>
+              </select>
+            </span>
+          </div>
+          <div class="filter-itm">
+            <span class="filter-itm-title">Sort:</span>
+            <span class="filter-itm-value">{{ getOrderPropValue() }}</span>
+          </div>
+          <div class="filter-itm" *ngIf="isFIC()">
+            <span class="filter-itm-title">Display:</span>
+            <span class="filter-itm-value">
+
+              <select [(ngModel)]="displayGrouped" [ngModelOptions]="{standalone: true}">
+                <option value="1">Group</option>
+                <option value="0">List</option>
+              </select>
+
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="collapse row" id="app-sidebar-filters-collapse" [ngbCollapse]="appSidebarFiltersCollapsed">
+
+        <div class="panel-body col-sm-12">
+
+          <div class="form-group" *ngFor="let sidebarSearchField of entitySidebarSearchFields">
+            <df-formfield [form]="form" [formField]="getFormField(sidebarSearchField)"></df-formfield>
+            <!--<button class=" input-group-addon btn btn-default col-sm-2" (click)="clearFilterValue(sidebarSearchField)">-->
+            <!--<i class="fa fa-remove"></i>-->
+            <!--</button>-->
+          </div>
+
+          <ng-container *ngIf="!isFIC()">
+            Sort by:
+            <select [formGroup]="form" [(ngModel)]="orderProp" [ngModelOptions]="{standalone: true}">
+              <option></option>
+              <option [value]="order_prop.key"
+                      *ngFor="let order_prop of order_prop_values"
+              >
+                {{order_prop.value }}
+              </option>
+            </select>
+            Sort Direction:
+            <select [formGroup]="form" [(ngModel)]="orderDirection" [ngModelOptions]="{standalone: true}">
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </ng-container>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <div class="sidebar-body" #sidebarBody scrollTracker>
+    <div class="eoa-list-wrapper"
+         *ngIf="getSidebarFormState() !== true"
+         [attr.class]="getEntityClass()"
+    >
+      <ng-container *ngIf="displayGrouped === '0'">
+        <div class="eoa-list-itm"
+             *ngFor="let entityItm of getEntityItems()"
+             (click)="entityGoTo($event, entityItm)"
+             [ngClass]="{'status-active': entityItm.statusId === 1}"
+             [class.selected]="entityItm === selectedEntity">
+          <ng-container *ngIf="!isFIC()">
+            <div class="status-display">
+            </div>
+            <div class="itm-id" [innerHTML]="getEntityID(entityItm)">
+            </div>
+          </ng-container>
+          <div class="content">
+            <p><b>{{ app.getEntityData(entityItm, getEntitySidebarFields(entityItm)['text_1']) }}</b></p>
+            <p class="small">{{ app.getEntityData(entityItm, getEntitySidebarFields(entityItm)['text_2']) }}</p>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container
+        *ngIf="displayGrouped === '1'"
+      >
+        <div class="panel panel-group panel-default panel-card"
+             *ngFor="let entityItmGroup of getGroupedEntityItems()"
+             [attr.data-form-group-id]="entityItmGroup.Group.key"
+             [attr.aria-expanded]="!data.collapse.offer"
+        >
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+
+              <a class="collapsed" role="button" data-toggle="collapse"
+                 (click)="data.collapse[entityItmGroup.Group.key] = !data.collapse[entityItmGroup.Group.key]"
+                 [attr.aria-controls]="'collapse-' + entityItmGroup.Group.key"
+                 [attr.aria-expanded]="!data.collapse[entityItmGroup.Group.key]"
+              >
+                <div class="col-sm-10">
+                  <h4 class="panel-title">
+                    <i class="fa fa-play"></i>
+                    {{ entityItmGroup.Group.value }}
+                  </h4>
+                </div>
+              </a>
+            </div>
+            <div [attr.id]="'collapse-' + entityItmGroup.Group.key"
+                 class="panel-collapse collapse"
+                 role="tabpanel" aria-labelledby="heading-offer"
+                 [ngbCollapse]="data.collapse[entityItmGroup.Group.key]"
+            >
+
+              <div class="panel-body row">
+                <div class="col-sm-12">
+                  <div class="eoa-list-itm"
+                       *ngFor="let entityItm of entityItmGroup.Items"
+                       (click)="entityGoTo($event, entityItm)"
+                       [ngClass]="{'status-active': entityItm.statusId === 1}"
+                       [class.selected]="entityItm === selectedEntity">
+                    <div class="content">
+                      {{ app.getEntityData(entityItm, getEntitySidebarFields(entityItm)['text_2']) }}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <eoa-entity-list-no-items
+        [entityList]="getEntityItems()"
+        (addOneClicked)="entityNewInSidebar()"
+      ></eoa-entity-list-no-items>
+    </div>
+    <!--<h1>{{ !getSidebarFormShown() + ' - '  + !getSidebarShown()}}</h1>-->
+    <div class="eoa-sidebar-form-wrapper" [ngClass]="{'hidden': !getSidebarFormShown()}">
+      <ng-template #sidebarFormContainer></ng-template>
+    </div>
+  </div>
+</div>

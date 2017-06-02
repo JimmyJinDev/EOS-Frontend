@@ -1,0 +1,122 @@
+<ng-container *ngIf="!hasEntityItems()">
+  <eoa-entity-list-no-items
+    [entityList]="entityItems"
+    (addOneClicked)="entityNewInSidebar()"
+  ></eoa-entity-list-no-items>
+</ng-container>
+
+<ng-container *ngIf="hasEntityItems()">
+  <div class="eoa-associated-entity-items-wrapper" *ngIf="!app.getAppData('sidebarFormShown')">
+
+    <table class="layout-table">
+      <thead class="eoa-list-header">
+      <tr>
+        <td class="status-display" *ngIf="app.getAppData( 'formEntityAbbr' ) !== 'FIL'">
+        </td>
+
+        <ng-container
+          *ngIf="undefined !== associatedEntityColumnNames"
+        >
+          <td *ngFor="let colName of associatedEntityColumnNames">
+            {{ colName }}
+          </td>
+        </ng-container>
+        <ng-container
+          *ngIf="undefined === associatedEntityColumnNames"
+        >
+          <td style="
+    width: 100%;
+">
+          </td>
+        </ng-container>
+
+        <td class="tools-display" *ngIf="undefined !== associatedEntityColumnNames">
+          <div
+            class="search-field-expanded right-inner-addon"
+            [ngClass]="{'display-collapsed': searchExpanded == false}"
+          >
+            <i class="fa fa-search" (click)="toggleSearchExpand()"></i>
+            <input class="form-control" [(ngModel)]="query"
+                   type="text"
+                   [formFieldfocus]="searchFieldExpandedFocusEventEmitter"
+            >
+
+          </div>
+          <button class="btn btn-link" (click)="toggleSearchExpand()">
+            <i class="fa fa-search"></i>
+          </button>
+          <button class="btn-circle btn-add"
+                  (click)="entityLinkAdd()"
+          >
+            <div class="text-icon">+</div>
+          </button>
+        </td>
+      </tr>
+      </thead>
+      <tbody class="eoa-list-body">
+      <tr
+        *ngFor="let entityItm of getEntityItems()
+          | paginate: {
+            id: 'entityListPagination',
+            itemsPerPage: 5,
+            currentPage: entityListCurrentPage
+          };
+          let i=index"
+        [ngClass]="{
+        'status-active': entityItm.StatusId === 1,
+        'status-to-unlink': entityItm._data.toDelete == true
+        }"
+        [class.selected]="entityItm === selectedEntity"
+        class="eoa-list-itm"
+        (click)="entityOpenInSidebar($event, entityItm)"
+        (mouseover)="tableRowHover($event)"
+        (mouseout)="tableRowHover($event, 'out')"
+      >
+        <td class="status-display" *ngIf="!app.isFIC()">
+        </td>
+
+        <ng-container *ngFor="let col of associatedEntityColumnNames">
+          <ng-container
+            *ngIf="undefined !== getAssociatedEntityColumnItems(col) && getAssociatedEntityColumnItems(col).length === 1">
+            <ng-container *ngIf="getAssociatedEntityColumnItems(col)[0] !== '||EntityID||' ; else showEntityID">
+              <td [innerHTML]="app.getEntityData(entityItm, getAssociatedEntityColumnItems(col)[0])">
+              </td>
+            </ng-container>
+            <ng-template #showEntityID>
+              <td [innerHTML]="getEntityID(entityItm)">
+              </td>
+            </ng-template>
+          </ng-container>
+          <ng-container
+            *ngIf="undefined !== getAssociatedEntityColumnItems(col) && getAssociatedEntityColumnItems(col).length === 2">
+            <td>
+              <div class="big">{{ app.getEntityData(entityItm, getAssociatedEntityColumnItems(col)[0]) }}</div>
+              <div class="small">{{ app.getEntityData(entityItm, getAssociatedEntityColumnItems(col)[1]) }}</div>
+            </td>
+          </ng-container>
+        </ng-container>
+
+        <td class="tools-display" *ngIf="undefined !== associatedEntityColumnNames">
+          <button class="btn btn-open-item btn-link"
+          >
+            <i class="fa fa-chevron-right"></i>
+          </button>
+          <button class="btn-circle btn-unlink"
+                  (click)="toggleParentLink(entityItm, $event)"
+          >
+            <div class="text-icon">-</div>
+            <i class="fa fa-repeat"></i>
+          </button>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="eoa-list-footer table-pagination">
+    <pagination-controls
+      id="entityListPagination"
+      (pageChange)="entityListCurrentPage = $event"
+    ></pagination-controls>
+  </div>
+</ng-container>

@@ -1,0 +1,6 @@
+<div class="form-footer-content-wrapper">
+  <div class="form-row form-footer" data-form-group-id="submit">
+    <button class="btn btn-link" (click)="app.EOA_NavigateTo('back', $event)">Cancel</button>
+    <button type="submit" class="btn btn-default" [disabled]="!form.valid" (click)="saveEntity($event)">Save</button>
+  </div>
+</div>

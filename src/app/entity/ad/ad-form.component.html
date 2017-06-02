@@ -1,0 +1,234 @@
+<div *ngIf="(data.entity && dataLoaded); else showElse">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
+    <form-header [data]="data"
+                 [(statusId)]="form.value.statusId"
+                 [(StatusReasonId)]="form.value.StatusReasonId"
+                 [submittedAndSaved]="submittedAndSaved"
+    ></form-header>
+    <div class="panel-group form-body" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-group panel-default panel-card">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab">
+            <h3 class="panel-title">Definition</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <df-formfield [form]="form" [formField]="formFields.EffectiveDate"></df-formfield>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <df-formfield [form]="form" [formField]="formFields.OfferId"></df-formfield>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label>Product Line</label>
+                  <p class="form-control-static">FAS</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab">
+            <h3 class="panel-title">
+              Details
+            </h3>
+          </div>
+          <div class="panel-body row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <df-formfield [form]="form" [formField]="formFields.Name"></df-formfield>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default" data-form-group-id="address">
+          <div class="panel-heading" role="tab">
+            <h3 class="panel-title">
+              Display
+            </h3>
+          </div>
+          <div class="panel-body row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield [form]="form" [formField]="formFields.AdType"></df-formfield>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield [form]="form" [formField]="formFields.PlacementType"></df-formfield>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield [form]="form" [formField]="formFields.CalculatedWeight"></df-formfield>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield
+                  [form]="form"
+                  [formField]="formFields.CalculatedWeightOverride"
+                  (dateValueChange)="calculatedWeightChange($event)"
+                ></df-formfield>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield
+                  [form]="form"
+                  [formField]="formFields.OverrideWeight"
+                  [isDisabled]="data.calculatedWeightDisabled"
+                ></df-formfield>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield [form]="form" [formField]="formFields.DisplayPercentage"></df-formfield>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield [form]="form" [formField]="formFields.DisplayStartDate" (dateValueChange)="startDateChanged($event)"></df-formfield>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <df-formfield [form]="form" [formField]="formFields.DisplayEndDate"></df-formfield>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="app.getAppData('sidebarFormShown') !== true && !data.newRecord">
+        <div class="panel panel-default panel-card" data-form-group-id="adCategory"
+             [attr.aria-expanded]="!data.collapse.adCategory"
+        >
+          <div class="panel-heading" role="tab" id="heading-adCategory">
+            <a class="collapsed" role="button" data-toggle="collapse"
+               (click)="data.collapse.adCategory = !data.collapse.adCategory"
+               aria-controls="collapse-adCategory"
+               [attr.aria-expanded]="!data.collapse.adCategory"
+            >
+              <div class="col-sm-10">
+                <h4 class="panel-title">
+                  <i class="fa fa-play"></i>
+                  Categories
+                </h4>
+              </div>
+              <div class="col-sm-2 text-right card-tools">
+                <i class="glyphicon glyphicon-pencil card-edit"></i>
+              </div>
+            </a>
+          </div>
+          <div id="collapse-adCategory"
+               class="panel-collapse collapse"
+               role="tabpanel" aria-labelledby="heading-adCategory"
+               [ngbCollapse]="data.collapse.adCategory"
+          >
+            <div class="panel-body">
+              <eoa-associated-entity
+                [entityAbbr]="'ADC'"
+              ></eoa-associated-entity>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default panel-card" data-form-group-id="filter"
+             [attr.aria-expanded]="!data.collapse.filter"
+        >
+          <div class="panel-heading" role="tab" id="heading-filter">
+            <a class="collapsed" role="button" data-toggle="collapse"
+               (click)="data.collapse.filter = !data.collapse.filter"
+               aria-controls="collapse-offer"
+               [attr.aria-expanded]="!data.collapse.filter"
+            >
+              <div class="col-sm-10">
+                <h4 class="panel-title">
+                  <i class="fa fa-play"></i>
+                  Associated Filters
+                </h4>
+              </div>
+              <div class="col-sm-2 text-right card-tools">
+                <i class="glyphicon glyphicon-pencil card-edit"></i>
+              </div>
+            </a>
+          </div>
+          <div id="collapse-filter"
+               class="panel-collapse collapse"
+               role="tabpanel" aria-labelledby="heading-filter"
+               [ngbCollapse]="data.collapse.filter"
+          >
+            <div class="panel-body">
+              <eoa-associated-entity
+                [entityAbbr]="'FIL'"
+              ></eoa-associated-entity>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default panel-card" data-form-group-id="creative"
+             [attr.aria-expanded]="!data.collapse.creative"
+        >
+          <div class="panel-heading" role="tab" id="heading-creative">
+            <a class="collapsed" role="button" data-toggle="collapse"
+               (click)="data.collapse.creative = !data.collapse.creative"
+               aria-controls="collapse-creative"
+               [attr.aria-expanded]="!data.collapse.creative"
+            >
+              <div class="col-sm-10">
+                <h4 class="panel-title">
+                  <i class="fa fa-play"></i>
+                  Associated Creatives
+                </h4>
+              </div>
+              <div class="col-sm-2 text-right card-tools">
+                <i class="glyphicon glyphicon-pencil card-edit"></i>
+              </div>
+            </a>
+          </div>
+          <div id="collapse-creative"
+               class="panel-collapse collapse"
+               role="tabpanel" aria-labelledby="heading-creative"
+               [ngbCollapse]="data.collapse.creative"
+          >
+            <div class="panel-body">
+              <!--<eoa-associated-entity-->
+              <!--[entityAbbr]="'OFF'"-->
+              <!--&gt;</eoa-associated-entity>-->
+            </div>
+          </div>
+        </div>
+        <entity-comment-panel
+          [form]="form"
+          [formFields]="formFields"
+          [data]="data"
+        ></entity-comment-panel>
+        <entity-audit-panel
+          [form]="form"
+          [formFields]="formFields"
+          [data]="data"
+        ></entity-audit-panel>
+      </ng-container>
+    </div>
+    <form-footer
+      [form]="form"
+    ></form-footer>
+  </form>
+</div>
+<ng-template #showElse>
+  <ngb-progressbar type="info"
+                   [value]="100" [striped]="true"
+                   [animated]="true"><i>Loading...</i>
+  </ngb-progressbar>
+</ng-template>
+
+

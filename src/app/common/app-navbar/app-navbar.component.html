@@ -1,0 +1,78 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded" [attr.id]="'navbar-' + navbarId">
+  <a class="navbar-brand"
+     routerLink="/" routerLinkActive="active"
+     *ngIf="!isResponsive()"
+  >
+    EOA
+  </a>
+
+  <div class="collapse navbar-collapse" [attr.id]="navbarId"
+       [attr.aria-expanded]="!navCollapsed"
+       [ngClass]="{'show': isResponsive()}"
+  >
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="d-inline-block" #menuLink1="ngbDropdown">
+          <button class="btn btn-outline-primary" id="menuLink1" ngbDropdownToggle (click)="nullMenu()">Ads</button>
+          <div class="dropdown-menu" aria-labelledby="menuLink1">
+            <a routerLink="/ad" routerLinkActive="active" class="dropdown-item">Creative - Ad components</a>
+            <a routerLink="/filterassociation" routerLinkActive="active" class="dropdown-item">Filter</a>
+            <a class="dropdown-item disabled">Location - Website/Page</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="d-inline-block" #menuLink2="ngbDropdown">
+          <button class="btn btn-outline-primary" id="menuLink2" ngbDropdownToggle>Offers</button>
+          <div class="dropdown-menu" aria-labelledby="menuLink2">
+            <a routerLink="/offer" routerLinkActive="active" class="dropdown-item">List</a>
+            <a routerLink="/offer/new" routerLinkActive="active" class="dropdown-item">New</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a routerLink="/budget" routerLinkActive="active" class="dropdown-item">Budget List</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="d-inline-block" #menuLink3="ngbDropdown">
+          <button class="btn btn-outline-primary" id="menuLink3" ngbDropdownToggle>Advertisers</button>
+          <div class="dropdown-menu" aria-labelledby="menuLink3">
+            <a routerLink="/advertiser" routerLinkActive="active" class="dropdown-item">List</a>
+            <a routerLink="/advertiser/new" routerLinkActive="active" class="dropdown-item">New</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="d-inline-block" #menuLink4="ngbDropdown">
+          <button class="btn btn-outline-primary" id="menuLink4" ngbDropdownToggle>Admin</button>
+          <div class="dropdown-menu" aria-labelledby="menuLink4">
+            <a routerLink="/admin" routerLinkActive="active" class="dropdown-item">Advanced</a>
+          </div>
+        </div>
+
+      </li>
+
+      <!--<li *ngIf="!(isLoggedIn | async)" (click)="authService.login()">-->
+      <!--<a>Login</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="(isLoggedIn | async)" (click)="authService.logout()">-->
+      <!--<a>Logout</a>-->
+      <!--</li>-->
+    </ul>
+  </div>
+  <button type="button"
+          *ngIf="navbarId === 'app-navbar'"
+          id="EOA-main-sidebar-toggle"
+          class="sidebar-toggle"
+          (click)="appSidebarToggle()"
+          aria-expanded="false"
+          aria-controls="sidebar">
+    <i class="fa fa-search"></i>
+    <span class="menu-text">
+          MENU
+    </span>
+  </button>
+</nav>

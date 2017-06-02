@@ -1,0 +1,59 @@
+<div class="eoa-associated-comment-entity-items-wrapper">
+    <div class="comment-input-wrapper">
+        <textarea></textarea>
+        <button>Add Comment</button>
+    </div>
+    <div class="comment-list-wrapper">
+        <div class="comment-list-header">
+            <div class="comment-search-wrapper">
+                <div class="comment-list-counter pull-left">
+                    210 Comments
+                </div>
+                <div class="comment-search pull-right">
+                    <div
+                            class="search-field-expanded right-inner-addon"
+                            [ngClass]="{'display-collapsed': searchExpanded == false}"
+                    >
+                        <i class="glyphicon glyphicon-search" (click)="toggleSearchExpand()"></i>
+                        <input class="form-control" [(ngModel)]="query"
+                               type="text"
+                               [formFieldfocus]="searchFieldExpandedFocusEventEmitter"
+                        >
+
+                    </div>
+                    <button class="btn btn-link" (click)="toggleSearchExpand()">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="comment-filters-wrapper">
+                <div class="comment-filters pull-right">
+                    <div class="active-filters">
+                        <div class="filter-itm">
+                            <span class="filter-itm-title">Type:</span>
+                            <span class="filter-itm-value">Advertisers</span>
+                        </div>
+                        <div class="filter-itm">
+                            <span class="filter-itm-title">Order by:</span>
+                            <span class="filter-itm-value">Date</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comment-list-body">
+            <div class="comment-list-itm"
+                 *ngFor="let entityItm of getEntityItems() | paginate: { itemsPerPage: 3, currentPage: entityListCurrentPage }; let i=index"
+            >
+                <div class="comment-header">{{entityItm.CreatedBy}} - {{entityItm.CreatedDate}}</div>
+                <div class="comment-body">
+                    {{entityItm.Comments}}
+                    <span class="read-more">[ <a (click)="readMore($event)">Read more v</a> ]</span>
+                </div>
+            </div>
+        </div>
+        <div class="eoa-list-footer table-pagination">
+          <pagination-controls (pageChange)="entityListCurrentPage = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
